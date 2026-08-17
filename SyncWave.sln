@@ -5,6 +5,8 @@ VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SyncWave.Core", "SyncWave.Core\SyncWave.Core.csproj", "{D58C1EFD-A855-447A-A168-E582D0DE2CD0}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SyncWave.Core.Tests", "SyncWave.Core.Tests\SyncWave.Core.Tests.csproj", "{57862C89-096D-4BF6-B798-C97E17BFD401}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,8 +29,23 @@ Global
 		{D58C1EFD-A855-447A-A168-E582D0DE2CD0}.Release|x64.Build.0 = Release|Any CPU
 		{D58C1EFD-A855-447A-A168-E582D0DE2CD0}.Release|x86.ActiveCfg = Release|Any CPU
 		{D58C1EFD-A855-447A-A168-E582D0DE2CD0}.Release|x86.Build.0 = Release|Any CPU
+		{57862C89-096D-4BF6-B798-C97E17BFD401}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{57862C89-096D-4BF6-B798-C97E17BFD401}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{57862C89-096D-4BF6-B798-C97E17BFD401}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{57862C89-096D-4BF6-B798-C97E17BFD401}.Debug|x64.Build.0 = Debug|Any CPU
+		{57862C89-096D-4BF6-B798-C97E17BFD401}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{57862C89-096D-4BF6-B798-C97E17BFD401}.Debug|x86.Build.0 = Debug|Any CPU
+		{57862C89-096D-4BF6-B798-C97E17BFD401}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{57862C89-096D-4BF6-B798-C97E17BFD401}.Release|Any CPU.Build.0 = Release|Any CPU
+		{57862C89-096D-4BF6-B798-C97E17BFD401}.Release|x64.ActiveCfg = Release|Any CPU
+		{57862C89-096D-4BF6-B798-C97E17BFD401}.Release|x64.Build.0 = Release|Any CPU
+		{57862C89-096D-4BF6-B798-C97E17BFD401}.Release|x86.ActiveCfg = Release|Any CPU
+		{57862C89-096D-4BF6-B798-C97E17BFD401}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {3FECBE4B-E71B-4531-BAA9-641D877632C1}
 	EndGlobalSection
 EndGlobal
