@@ -45,5 +45,25 @@ public class RoomTests
         Assert.Equal(2, room.Participants.Count);
     }
 
+    [Fact]
+    public void RemoveParticipant_WhenHostLeaves_ShouldTransferHostToNextParticipant()
+    {
+        // Arrange
+        // Створюємо нову кімнату та двох учасників
+        var room = new Room { RoomCode = "Test-Room" };
+        var host = new Participant { ConnectionId = "Host-Connection", Username = "Host-User" };
+        var guest = new Participant { ConnectionId = "Guest-Connection", Username = "Guest-User" };
+        room.AddParticipant(host); // Додаємо першого учасника до кімнати
+        room.AddParticipant(guest); // Додаємо другого учасника до кімнати
+
+        // Act
+        // Видаляємо хоста з кімнати
+        room.RemoveParticipant(host.ConnectionId);
+
+        // Assert
+        // Перевіряємо, що другий учасник тепер є хостом та що в кімнаті залишився лише один учасник
+        Assert.True(guest.IsHost);
+        Assert.Single(room.Participants);
+    }
 
 }
