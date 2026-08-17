@@ -1,6 +1,7 @@
 ﻿namespace SyncWave.Core.Tests;
 
 using SyncWave.Core.Entities;
+using SyncWave.Core.Enums;
 
 public class RoomTests
 {
@@ -66,4 +67,24 @@ public class RoomTests
         Assert.Single(room.Participants);
     }
 
+    [Fact]
+    public void EnqueueMedia_WhenNoMediaPlaying_ShouldStartPlayingImmediately()
+    {
+        // Arrange
+        // Створюємо нову кімнату та медіа-елемент
+        var room = new Room { RoomCode = "Test-Room" };
+        var media = new MediaItem { Title = "Song 1", SourceUrl = "http://testmedia.com/song1", Duration = TimeSpan.FromMinutes(3) };
+
+        // Act
+        // Додаємо медіа-елемент до черги відтворення
+        room.EnqueueMedia(media);
+
+        // Assert
+        // Перевіряємо, що медіа-елемент встановлений як поточний та що стан відтворення встановлений на "Playing"
+        Assert.NotNull(room.CurrentMedia);
+        Assert.Equal(media, room.CurrentMedia);
+        Assert.Equal(PlaybackState.Playing, room.State);
+        Assert.Equal(TimeSpan.Zero, room.CurrentPosition);
+        Assert.Empty(room.Queue);
+    }
 }
