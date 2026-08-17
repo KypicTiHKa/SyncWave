@@ -3,8 +3,13 @@
 using SyncWave.Core.Entities;
 using SyncWave.Core.Enums;
 
+// <summary>
+// Тестовий клас для перевірки функціональності класу Room.
+// </summary>
+
 public class RoomTests
 {
+    // Тест для перевірки додавання першого учасника до кімнати та встановлення його як хоста
     [Fact]
     public void AddParticipant_WhenFirstParticipant_ShouldSetAsHost()
     {
@@ -24,7 +29,7 @@ public class RoomTests
 
     }
 
-
+    // Тест для перевірки додавання другого учасника до кімнати та перевірки, що він не встановлений як хост
     [Fact]
     public void AddParticipant_WhenSecondParticipant_ShouldNotSetAsHost()
     {
@@ -46,6 +51,7 @@ public class RoomTests
         Assert.Equal(2, room.Participants.Count);
     }
 
+    // Тест для перевірки видалення хоста з кімнати та передачі ролі хоста наступному учаснику
     [Fact]
     public void RemoveParticipant_WhenHostLeaves_ShouldTransferHostToNextParticipant()
     {
@@ -67,6 +73,7 @@ public class RoomTests
         Assert.Single(room.Participants);
     }
 
+    // Тест для перевірки додавання медіа-елемента до черги відтворення, коли нічого не відтворюється
     [Fact]
     public void EnqueueMedia_WhenNoMediaPlaying_ShouldStartPlayingImmediately()
     {
@@ -88,6 +95,7 @@ public class RoomTests
         Assert.Empty(room.Queue);
     }
 
+    // Тест для перевірки додавання медіа-елемента до черги відтворення, коли вже відтворюється інший медіа-елемент
     [Fact]
     public void EnqueueMedia_WhenMediaAlreadyPlaying_ShouldAddToQueue()
     {
@@ -109,5 +117,31 @@ public class RoomTests
         Assert.Equal(media2, room.Queue.First());
     }
 
+    // Тест для перевірки відтворення наступного медіа-елемента з черги та видалення його з черги
+    [Fact]
+    public void PlayNext_WhenQueueHasItems_ShouldPlayNextAndRemoveFromQueue()
+    {
+
+        // Arrange
+        // Створюємо нову кімнату та два медіа-елементи
+        var room = new Room { RoomCode = "Test-Room" };
+        var media1 = new MediaItem { Title = "Song 1", SourceUrl = "http://testmedia.com/song1", Duration = TimeSpan.FromMinutes(3) };
+        var media2 = new MediaItem { Title = "Song 2", SourceUrl = "http://testmedia.com/song2", Duration = TimeSpan.FromMinutes(4) };
+        room.EnqueueMedia(media1);
+        room.EnqueueMedia(media2);
+
+        // Act
+        // Викликаємо метод для відтворення наступного медіа-елемента
+        room.PlayNext();
+
+        // Assert
+        // Перевіряємо, що другий медіа-елемент встановлений як поточний, черга порожня,
+        // стан відтворення встановлений на "Playing" та позиція відтворення скинута
+        Assert.Equal(media2, room.CurrentMedia);
+        Assert.Empty(room.Queue);
+        Assert.Equal(PlaybackState.Playing, room.State);
+        Assert.Equal(TimeSpan.Zero, room.CurrentPosition);
+
+    }
 
 }
