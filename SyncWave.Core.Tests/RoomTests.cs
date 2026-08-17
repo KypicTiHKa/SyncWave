@@ -87,4 +87,27 @@ public class RoomTests
         Assert.Equal(TimeSpan.Zero, room.CurrentPosition);
         Assert.Empty(room.Queue);
     }
+
+    [Fact]
+    public void EnqueueMedia_WhenMediaAlreadyPlaying_ShouldAddToQueue()
+    {
+        // Arrange
+        // Створюємо нову кімнату та два медіа-елементи
+        var room = new Room { RoomCode = "Test-Room" };
+        var media1 = new MediaItem { Title = "Song 1", SourceUrl = "http://testmedia.com/song1", Duration = TimeSpan.FromMinutes(3) };
+        var media2 = new MediaItem { Title = "Song 2", SourceUrl = "http://testmedia.com/song2", Duration = TimeSpan.FromMinutes(4) };
+        room.EnqueueMedia(media1); // Додаємо перший медіа-елемент до черги відтворення
+
+        // Act
+        // Додаємо другий медіа-елемент до черги відтворення
+        room.EnqueueMedia(media2);
+
+        // Assert
+        // Перевіряємо, що перший медіа-елемент встановлений як поточний, а другий доданий до черги
+        Assert.Equal(media1, room.CurrentMedia);
+        Assert.Single(room.Queue);
+        Assert.Equal(media2, room.Queue.First());
+    }
+
+
 }
