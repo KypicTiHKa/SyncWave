@@ -6,7 +6,7 @@
 
 public enum MediaType
 {
-    Audio, 
+    Audio,
     Video,
     YouTube
 }
