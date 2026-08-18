@@ -73,6 +73,23 @@ public class RoomTests
         Assert.Single(room.Participants);
     }
 
+    // Тест для перевірки видалення останнього учасника з кімнати та перевірки, що хост не встановлений
+    [Fact]
+    public void RemoveParticipant_WhenLastParticipantLeaves_ShouldHaveNoHost()
+    {
+        // Arrange
+        // Створюємо нову кімнату та одного учасника
+        var room = new Room { RoomCode = "Test-Room" };
+        var participant = new Participant { ConnectionId = "Test-Connection", Username = "Test-User" };
+        room.AddParticipant(participant); // Додаємо учасника до кімнати
+        // Act
+        // Видаляємо учасника з кімнати
+        room.RemoveParticipant(participant.ConnectionId);
+        // Assert
+        // Перевіряємо, що в кімнаті немає учасників та що хост не встановлений
+        Assert.Empty(room.Participants);
+    }
+
     // Тест для перевірки додавання медіа-елемента до черги відтворення, коли нічого не відтворюється
     [Fact]
     public void EnqueueMedia_WhenNoMediaPlaying_ShouldStartPlayingImmediately()
@@ -142,6 +159,27 @@ public class RoomTests
         Assert.Equal(PlaybackState.Playing, room.State);
         Assert.Equal(TimeSpan.Zero, room.CurrentPosition);
 
+    }
+
+    // Тест для перевірки відтворення наступного медіа-елемента, коли черга порожня, та перевірки, що відтворення зупиняється
+    [Fact]
+    public void PlayNext_WhenQueueIsEmpty_ShouldStopPlaybackAndClearCurrentMedia()
+    {
+        // Arrange
+        // Створюємо нову кімнату та медіа-елемент
+        var room = new Room { RoomCode = "Test-Room" };
+        var media = new MediaItem { Title = "Song 1", SourceUrl = "http://testmedia.com/song1", Duration = TimeSpan.FromMinutes(3) };
+        room.EnqueueMedia(media);
+
+        // Act
+        // Викликаємо метод для відтворення наступного медіа-елемента, коли черга порожня
+        room.PlayNext();
+
+        // Assert
+        // Перевіряємо, що поточний медіа-елемент відсутній, стан відтворення встановлений на "Stopped" та позиція відтворення скинута
+        Assert.Null(room.CurrentMedia);
+        Assert.Equal(PlaybackState.Stopped, room.State);
+        Assert.Equal(TimeSpan.Zero, room.CurrentPosition);
     }
 
 }
